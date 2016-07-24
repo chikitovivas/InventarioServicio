@@ -58,7 +58,6 @@ public class login extends javax.swing.JFrame {
             Logger.getLogger(InventarioH.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        this.bienvenido = new Index();
         
         initComponents();     
 
@@ -210,7 +209,7 @@ public class login extends javax.swing.JFrame {
             //Creamos un nuevo statement
             stmt = con.createStatement(); 
             //Ejecutamos el query de verificacion de usuario
-            if (stmt.execute("SELECT idUsuario FROM Usuario WHERE Usuario.username = '" + username.getText()
+            if (stmt.execute("SELECT idUsuario, Tipo FROM Usuario WHERE Usuario.username = '" + username.getText()
                             + "' AND Usuario.password = '" + new String (passwordPassField.getPassword())+ "' ")) {
                 rs = stmt.getResultSet();
             }
@@ -228,15 +227,19 @@ public class login extends javax.swing.JFrame {
         try {
             //Si es correcto
             if (rs.first()){
+                
                 //Abrimos la pagina Bienvenido
+                this.bienvenido = new Index(rs.getInt("Tipo"));
                 bienvenido.setVisible(true);
                 //Cerramos la pagina de Login
                 this.setVisible(false);
             }else{      //Si el usuario no es correcto
                 //Se abre una ventana con el siguiente mensaje
-                JOptionPane.showMessageDialog(null, "Usuario incorrecto" );
+                JOptionPane.showMessageDialog(null, "Usuario o password incorrectos." );
             }
         } catch (SQLException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Usuario o password incorrectos." );
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

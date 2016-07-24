@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -41,7 +40,7 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
         this.con = con;
         stmt = con.createStatement();
         usuariosLista();
-        this.remove(cancelar);
+         this.remove(cancelar);
         this.remove(guardar);
         this.revalidate();
         this.repaint();
@@ -153,10 +152,12 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
 
         buttonGroup1.add(adminRdioBtn);
         adminRdioBtn.setText("Administrador");
+        adminRdioBtn.setEnabled(false);
 
         buttonGroup1.add(usuarioRdioBtn);
         usuarioRdioBtn.setSelected(true);
         usuarioRdioBtn.setText("Usuario");
+        usuarioRdioBtn.setEnabled(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cambiar password"));
 
@@ -214,6 +215,12 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
         jLabel11.setText("Estado:");
 
         estatusUserCmBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Vacaciones", "Reposo", "Desincorporado" }));
+        estatusUserCmBox.setEnabled(false);
+        estatusUserCmBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estatusUserCmBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -265,7 +272,7 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
                                         .addComponent(emailTxtField))))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(editar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -308,13 +315,13 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(estatusUserCmBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(usuarioRdioBtn)
-                            .addComponent(adminRdioBtn))
+                            .addComponent(adminRdioBtn)
+                            .addComponent(usuarioRdioBtn))
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(editar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cancelar)
@@ -327,23 +334,7 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-         this.usernameTxtField.setEnabled(false);
-        this.nombreTxtField.setEnabled(false);
-        this.apellidoTxtField.setEnabled(false);
-        this.passwordPassField.setEnabled(false);
-        this.passAntPassField.setEnabled(false);
-        this.confirPassPassField.setEnabled(false);
-        this.tlf1TxtField.setEnabled(false);
-        this.tlf2TxtField.setEnabled(false);
-        this.emailTxtField.setEnabled(false);
-        
-        editar.setBounds(cancelar.getBounds());
-        this.remove(cancelar);
-        this.remove(guardar);
-        this.add(editar);
-        this.revalidate();
-        this.repaint();
-        limpiar_formulario();
+        reiniciarformulario();
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void agregar_UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar_UsuarioActionPerformed
@@ -369,6 +360,9 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
         this.tlf1TxtField.setEnabled(true);
         this.tlf2TxtField.setEnabled(true);
         this.emailTxtField.setEnabled(true);
+        this.estatusUserCmBox.setEnabled(true);
+        this.adminRdioBtn.setEnabled(true);
+        this.usuarioRdioBtn.setEnabled(true);
         cancelar.setBounds(editar.getBounds());
         this.add(guardar);
         this.remove(editar);
@@ -385,17 +379,6 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
        String confirPass = new String (confirPassPassField.getPassword());
         //Se verifica si todos los campos basicos estan llenos
         Usuario usuario = new Usuario(con,(String) usuariosList.getSelectedItem());
-        
-        System.out.println("INSERT INTO `inventario`.`usuario` (`Nombre`, `Apellido`, `Password`, `Tlf_1`, `Tlf_2`, `Username`, `Email`, `Estatus_usuario`, `Tipo`) "
-                        + "VALUES ('"+nombreTxtField.getText()+"', "
-                        +          "'"+apellidoTxtField.getText()+"', "
-                        +          "'"+passwordPassField.getPassword()+"', "
-                        +          "'"+tlf1TxtField.getText()+"', "
-                        +          "'"+tlf2TxtField.getText()+"', "
-                        +          "'"+usernameTxtField.getText()+"', "
-                        +          "'"+emailTxtField.getText()+"', '"
-                        +          " '1', "
-                        +          " '"+0+"' ); ");
         
         
         if(adminRdioBtn.isSelected())
@@ -425,7 +408,7 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
                                     +      "`Tlf_2`= '"+tlf2TxtField.getText()+"', "
                                     +      "`Username`= '"+usernameTxtField.getText()+"', "
                                     +      "`Email`= '"+emailTxtField.getText()+"', "
-                                    +      " `Estatus_usuario`= '"+estatusUserCmBox.getSelectedItem()+"' "
+                                    +      " `Estatus_usuario`= '"+estatusUserCmBox.getSelectedItem()+"', "
                                     +      " `Tipo`= '"+tipoUsuario+"' "
                                     + "     WHERE `idUsuario`= '"+usuario.getIdUsuario()+"' ; " ;
                     }else{
@@ -446,7 +429,7 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
                         +      "`Tlf_2`='"+tlf2TxtField.getText()+"', "
                         +      "`Username`='"+usernameTxtField.getText()+"', "
                         +      "`Email`='"+emailTxtField.getText()+"', "
-                        +      " `Estatus_usuario`= '"+estatusUserCmBox.getSelectedItem()+"' "
+                        +      " `Estatus_usuario`= '"+estatusUserCmBox.getSelectedItem()+"', "
                         +      " `Tipo`= '"+tipoUsuario+"' "
                         + "     WHERE `idUsuario`='"+usuario.getIdUsuario()+"' ; " ;
         }
@@ -458,7 +441,7 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
 
                     stmt.execute(query);
                     JOptionPane.showMessageDialog(null, "Usuario actualizado con éxito.");
-                    limpiar_formulario();
+                    reiniciarformulario();
                     
                 } catch (SQLException ex) {
                    Logger.getLogger(agregarEditar_usuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -495,9 +478,13 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_usuariosListActionPerformed
 
+    private void estatusUserCmBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estatusUserCmBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_estatusUserCmBoxActionPerformed
+
     public void usuariosLista(){
         try {
-            rs = stmt.executeQuery("SELECT Username FROM inventario.usuario where Estatus_usuario = 1;");
+            rs = stmt.executeQuery("SELECT Username FROM inventario.usuario ;");
             rs.beforeFirst();
             
             while (rs.next()) {
@@ -525,7 +512,28 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
         this.estatusUserCmBox.setSelectedItem("Activo");
     }
     
-    
+    private void reiniciarformulario(){
+        
+        this.usernameTxtField.setEnabled(false);
+        this.nombreTxtField.setEnabled(false);
+        this.apellidoTxtField.setEnabled(false);
+        this.passwordPassField.setEnabled(false);
+        this.passAntPassField.setEnabled(false);
+        this.confirPassPassField.setEnabled(false);
+        this.tlf1TxtField.setEnabled(false);
+        this.tlf2TxtField.setEnabled(false);
+        this.emailTxtField.setEnabled(false);
+        this.estatusUserCmBox.setEnabled(false);
+        this.adminRdioBtn.setEnabled(false);
+        this.usuarioRdioBtn.setEnabled(false);
+        editar.setBounds(cancelar.getBounds());
+        this.remove(cancelar);
+        this.remove(guardar);
+        this.add(editar);
+        this.revalidate();
+        this.repaint();
+        limpiar_formulario();
+    }
     /**
      * @param args the command line arguments
      */

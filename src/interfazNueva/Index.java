@@ -57,7 +57,7 @@ public class Index extends javax.swing.JFrame {
     int idMovilizacion;
     String fisico_vij,ubicacion_vij,responsable_vij;
     int idCambiosMovilizacion;
-    public Index() {
+    public Index(int tipo_usuario) {
         try {
             initComponents();
             proveedor = new Proveedor(con);
@@ -72,6 +72,11 @@ public class Index extends javax.swing.JFrame {
             MovilizacionBD = new Movilizacion(con);
             acomodar_movilizaciones();
             deshabilitar_movilizacion();
+            
+            if( tipo_usuario == 0){
+                tipo_usuario();
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -208,17 +213,16 @@ public class Index extends javax.swing.JFrame {
         ubicacion_mover = new javax.swing.JComboBox();
         fisico_mover = new javax.swing.JComboBox();
         guardar_mover = new javax.swing.JButton();
+        salirBtn = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         familiaMenuItem = new javax.swing.JMenuItem();
         estatusMenuItem = new javax.swing.JMenuItem();
         propietarioMenuItem = new javax.swing.JMenuItem();
         proveedoresMenuItem = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
         ubicacionMenuItem = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -1151,6 +1155,13 @@ public class Index extends javax.swing.JFrame {
             }
         });
 
+        salirBtn.setText("Salir");
+        salirBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -1158,9 +1169,6 @@ public class Index extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(guardar_mover))
                     .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -1174,7 +1182,12 @@ public class Index extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel21)
                         .addGap(18, 18, 18)
-                        .addComponent(descripcion_mover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(descripcion_mover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(guardar_mover)
+                        .addGap(18, 18, 18)
+                        .addComponent(salirBtn)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -1197,7 +1210,9 @@ public class Index extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(guardar_mover)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(guardar_mover)
+                    .addComponent(salirBtn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1272,10 +1287,6 @@ public class Index extends javax.swing.JFrame {
         });
         jMenu1.add(proveedoresMenuItem);
 
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Inventario");
-
         ubicacionMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         ubicacionMenuItem.setText("Ubicación");
         ubicacionMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -1283,9 +1294,9 @@ public class Index extends javax.swing.JFrame {
                 ubicacionMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(ubicacionMenuItem);
+        jMenu1.add(ubicacionMenuItem);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu1);
 
         jMenu3.setText("Cuentas");
 
@@ -1299,9 +1310,6 @@ public class Index extends javax.swing.JFrame {
         jMenu3.add(jMenuItem2);
 
         jMenuBar1.add(jMenu3);
-
-        jMenu4.setText("Seguridad");
-        jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
 
@@ -1426,11 +1434,11 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_responsableCmboxActionPerformed
 
     private void SalirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBtnActionPerformed
-        dispose();
+        System.exit(0);
     }//GEN-LAST:event_SalirBtnActionPerformed
 
     private void SalirBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBtn1ActionPerformed
-        dispose();
+        System.exit(0);
     }//GEN-LAST:event_SalirBtn1ActionPerformed
 
     private void familiaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_familiaMenuItemActionPerformed
@@ -1898,6 +1906,10 @@ public class Index extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void salirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirBtnActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_salirBtnActionPerformed
+
     private void iniciar_listar(){
         rs = BienesBD.getAll();
         try {
@@ -2133,6 +2145,9 @@ public class Index extends javax.swing.JFrame {
         observacion_moverCmBox.setEnabled(false);
     }
     
+    private void tipo_usuario(){
+    }
+    
    /* private void inicializarMoverActivo () {
         rs = stmt.executeQuery(sql);
     } */
@@ -2176,7 +2191,6 @@ public class Index extends javax.swing.JFrame {
                     Logger.getLogger(InventarioH.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
-                new Index().setVisible(true);
             }
         });
     }
@@ -2270,9 +2284,7 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -2310,6 +2322,7 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JLabel resp_mover;
     private javax.swing.JComboBox responsableCmbox;
     private javax.swing.JComboBox responsable_mover;
+    private javax.swing.JButton salirBtn;
     private javax.swing.JComboBox statusFisicoCmbox;
     private javax.swing.JComboBox statusUbiCmbox;
     private javax.swing.JComboBox ubicacionCmBox;
