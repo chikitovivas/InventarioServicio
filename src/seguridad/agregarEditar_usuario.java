@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -338,8 +339,15 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void agregar_UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar_UsuarioActionPerformed
-          try {
-            agregarUsuario crearUsuario = new agregarUsuario (con);
+        try {
+            Callable<Void> prueba = new Callable<Void>() {
+            //Funcion call(), la que se ejecutara desde la variable
+                public Void call() {
+                    usuariosLista();
+                    return null;
+                }
+            };
+            agregarUsuario crearUsuario = new agregarUsuario (con,prueba);
             crearUsuario.setVisible(true);
             crearUsuario.setLocationRelativeTo(null);
             crearUsuario.setResizable(false);
@@ -486,7 +494,7 @@ public class agregarEditar_usuario extends javax.swing.JFrame {
         try {
             rs = stmt.executeQuery("SELECT Username FROM inventario.usuario ;");
             rs.beforeFirst();
-            
+            this.usuariosList.removeAll();
             while (rs.next()) {
                 usuariosList.add(rs.getString("Username"));
             }

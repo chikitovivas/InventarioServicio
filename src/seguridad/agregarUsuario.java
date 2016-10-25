@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,15 +26,18 @@ public class agregarUsuario extends javax.swing.JFrame {
     ResultSet rs = null;
     //Variable conexion a la DB
     Connection con = null;
+    
+    Callable funciones;
     /**
      * Creates new form agregarUsuario
      * @param con
      * @throws java.sql.SQLException
      */
-    public agregarUsuario(Connection con) throws SQLException {
+    public agregarUsuario(Connection con, Callable usuariosLista) throws SQLException {
         initComponents();
         this.con = con;
         stmt = con.createStatement();
+        this.funciones = usuariosLista;
     }
 
     /**
@@ -260,6 +264,7 @@ public class agregarUsuario extends javax.swing.JFrame {
                     stmt.execute(query);
                     JOptionPane.showMessageDialog(null, "Usuario agregado exitósamente");
                     limpiarFormulario();
+                    this.funciones.call();
                 } catch (SQLException ex) {
                     Logger.getLogger(agregarEditar_usuario.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -269,6 +274,8 @@ public class agregarUsuario extends javax.swing.JFrame {
                             + "Este usuario ya existe en la base de datos.\n Introduzca un username distinto." ,"Error.", JOptionPane.ERROR_MESSAGE);
                         break;
                     }
+                } catch (Exception ex) {
+                    Logger.getLogger(agregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }else{
                 JOptionPane.showMessageDialog(null, "Los password deben coincidir.","Error al agregar"

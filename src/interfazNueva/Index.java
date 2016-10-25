@@ -47,6 +47,7 @@ public class Index extends javax.swing.JFrame {
     private ResultSet rs = null;
     //Variable conexion a la DB
     private Connection con = null;
+    int flag = 0;
     /**
      * Creates new form prueba_menu
      */
@@ -389,6 +390,12 @@ public class Index extends javax.swing.JFrame {
         StatusUbiLbl.setText("Ubicación:");
 
         StatusFisicoLbl.setText("Físico:");
+
+        statusUbiCmbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusUbiCmboxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout EstadosPanelLayout = new javax.swing.GroupLayout(EstadosPanel);
         EstadosPanel.setLayout(EstadosPanelLayout);
@@ -1572,7 +1579,7 @@ public class Index extends javax.swing.JFrame {
                 this.Preciolbl.setText(cate.getString("Precio_actual"));
                 this.Costolbl.setText(cate.getString("Precio_referencial_unitario"));
                 this.Fechalbl.setText(cate.getString("Fecha_adquisicion"));
-                this.Descripcion.setText(cate.getString("Descripcion_detallada"));
+                this.Descripcion1.setText(cate.getString("Descripcion_detallada"));
                 this.UbiStatlbl.setText(cate.getString("con_ubi"));
                 this.FiscStalbl.setText(cate.getString("con_fis"));
                 this.Responsablelbl.setText(cate.getString("us_nombre") +" " +cate.getString("us_apellido") );
@@ -1587,14 +1594,22 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_bienes_ListarMouseClicked
 
     private void PanelBienesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_PanelBienesStateChanged
-       if(PanelBienes.getSelectedIndex() == 1){
+       
+        if(PanelBienes.getSelectedIndex() == 1){
            System.out.println(PanelBienes.getSelectedIndex());
             //Se inician las variables de listar
+           flag = 1;
             iniciar_listar();
         } else if(PanelBienes.getSelectedIndex() == 2){ 
+            System.out.println(PanelBienes.getSelectedIndex());
             //Se inician las variables de mover
             iniciar_mover();
+            flag = 1;
+        }else if((PanelBienes.getSelectedIndex() == 0) && (flag == 1)){
+            System.out.println(PanelBienes.getSelectedIndex());
+            iniciar_agregarActivo();
         }
+
     }//GEN-LAST:event_PanelBienesStateChanged
 
     private void guardar_moverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardar_moverActionPerformed
@@ -1910,6 +1925,10 @@ public class Index extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_salirBtnActionPerformed
 
+    private void statusUbiCmboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusUbiCmboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_statusUbiCmboxActionPerformed
+
     private void iniciar_listar(){
         rs = BienesBD.getAll();
         try {
@@ -1980,7 +1999,7 @@ public class Index extends javax.swing.JFrame {
                 destino_moverCmBox.addItem(rs.getString("descripcion"));
             }
             /********************* Aqui se agregan todos los responsables existentes en el ComboBox de responsables ******************/
-            rs = stmt.executeQuery("SELECT DISTINCT * FROM inventario.usuario where Estatus_usuario = 1  order by Username asc;");
+            rs = stmt.executeQuery("SELECT DISTINCT * FROM inventario.usuario where Estatus_usuario = 'Activo'  order by Username asc;");
             rs.beforeFirst();
 
             while(rs.next()){
@@ -2028,6 +2047,14 @@ public class Index extends javax.swing.JFrame {
     }
     
     private void iniciar_agregarActivo (){
+        proveedorCmBox.removeAllItems();
+        categoriaCmBox.removeAllItems();
+        ubicacionCmBox.removeAllItems();
+        responsableCmbox.removeAllItems();
+        propietarioCmbox.removeAllItems();
+        statusUbiCmbox.removeAllItems();
+        statusFisicoCmbox.removeAllItems();
+        
         codigoTxt.setText("");
         nombreTxt.setText("");
         precioRefText.setText("");
@@ -2063,7 +2090,7 @@ public class Index extends javax.swing.JFrame {
             }
             
             /********************* Aqui se agregan todos los responsables existentes en el ComboBox de responsables ******************/
-            rs = stmt.executeQuery("SELECT * FROM inventario.usuario where Estatus_usuario = 1  order by Username asc;");
+            rs = stmt.executeQuery("SELECT * FROM inventario.usuario where Estatus_usuario = 'Activo'  order by Username asc;");
             rs.beforeFirst();
             
             while(rs.next()){
