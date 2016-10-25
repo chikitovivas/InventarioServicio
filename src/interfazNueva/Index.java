@@ -57,7 +57,7 @@ public class Index extends javax.swing.JFrame {
     int idMovilizacion;
     String fisico_vij,ubicacion_vij,responsable_vij;
     int idCambiosMovilizacion;
-    public Index(int tipo_usuario) {
+    public Index(/*int tipo_usuario*/) {
         try {
             initComponents();
             proveedor = new Proveedor(con);
@@ -73,9 +73,9 @@ public class Index extends javax.swing.JFrame {
             acomodar_movilizaciones();
             deshabilitar_movilizacion();
             
-            if( tipo_usuario == 0){
+            /*if( tipo_usuario == 0){
                 tipo_usuario();
-            }
+            }*/
             
         } catch (SQLException ex) {
             Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
