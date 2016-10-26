@@ -21,7 +21,7 @@ public class InventarioH {
     /**
      * @param args the command line arguments
      */
-    static Index VentanaPrincipal = new Index();
+    static login VentanaPrincipal = new login();
     
     public static void main(String[] args) {     
         /*Look And Feel de Windows para el programa*/

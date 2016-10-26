@@ -58,7 +58,9 @@ public class Index extends javax.swing.JFrame {
     int idMovilizacion;
     String fisico_vij,ubicacion_vij,responsable_vij;
     int idCambiosMovilizacion;
-    public Index(/*int tipo_usuario*/) {
+    
+    
+    public Index(int tipo_usuario) {
         try {
             initComponents();
             proveedor = new Proveedor(con);
@@ -74,9 +76,9 @@ public class Index extends javax.swing.JFrame {
             acomodar_movilizaciones();
             deshabilitar_movilizacion();
             
-            /*if( tipo_usuario == 0){
+            if( tipo_usuario == 0){
                 tipo_usuario();
-            }*/
+            }
             
         } catch (SQLException ex) {
             Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
@@ -216,13 +218,13 @@ public class Index extends javax.swing.JFrame {
         guardar_mover = new javax.swing.JButton();
         salirBtn = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        bienesJmenu = new javax.swing.JMenu();
         familiaMenuItem = new javax.swing.JMenuItem();
         estatusMenuItem = new javax.swing.JMenuItem();
         propietarioMenuItem = new javax.swing.JMenuItem();
         proveedoresMenuItem = new javax.swing.JMenuItem();
         ubicacionMenuItem = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        cuentasJmenu = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
@@ -1251,10 +1253,10 @@ public class Index extends javax.swing.JFrame {
 
         getContentPane().add(PanelPrincipal, java.awt.BorderLayout.CENTER);
 
-        jMenu1.setText("Bienes");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+        bienesJmenu.setText("Bienes");
+        bienesJmenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
+                bienesJmenuActionPerformed(evt);
             }
         });
 
@@ -1265,7 +1267,7 @@ public class Index extends javax.swing.JFrame {
                 familiaMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(familiaMenuItem);
+        bienesJmenu.add(familiaMenuItem);
 
         estatusMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         estatusMenuItem.setText("Estatus");
@@ -1274,7 +1276,7 @@ public class Index extends javax.swing.JFrame {
                 estatusMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(estatusMenuItem);
+        bienesJmenu.add(estatusMenuItem);
 
         propietarioMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         propietarioMenuItem.setText("Propietario");
@@ -1283,7 +1285,7 @@ public class Index extends javax.swing.JFrame {
                 propietarioMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(propietarioMenuItem);
+        bienesJmenu.add(propietarioMenuItem);
 
         proveedoresMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         proveedoresMenuItem.setText("Proveedores");
@@ -1292,7 +1294,7 @@ public class Index extends javax.swing.JFrame {
                 proveedoresMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(proveedoresMenuItem);
+        bienesJmenu.add(proveedoresMenuItem);
 
         ubicacionMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         ubicacionMenuItem.setText("Ubicación");
@@ -1301,11 +1303,11 @@ public class Index extends javax.swing.JFrame {
                 ubicacionMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(ubicacionMenuItem);
+        bienesJmenu.add(ubicacionMenuItem);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(bienesJmenu);
 
-        jMenu3.setText("Cuentas");
+        cuentasJmenu.setText("Cuentas");
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText("Modficiar usuario");
@@ -1314,20 +1316,20 @@ public class Index extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem2);
+        cuentasJmenu.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(cuentasJmenu);
 
         setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+    private void bienesJmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bienesJmenuActionPerformed
        /* Lista_activo ventana = new Lista_activo();
         ventana.setVisible(true);
         this.setVisible(false);*/
-    }//GEN-LAST:event_jMenu1ActionPerformed
+    }//GEN-LAST:event_bienesJmenuActionPerformed
 
     private void guardarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarBtnActionPerformed
         switch (guardarBtn.getText()){
@@ -2173,6 +2175,8 @@ public class Index extends javax.swing.JFrame {
     }
     
     private void tipo_usuario(){
+        bienesJmenu.setEnabled(false);
+        cuentasJmenu.setEnabled(false);
     }
     
    /* private void inicializarMoverActivo () {
@@ -2268,12 +2272,14 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JPanel UsuariosPanel;
     private javax.swing.JPanel UsuariosPanel1;
     private javax.swing.JPanel agregarActivoPanel;
+    private javax.swing.JMenu bienesJmenu;
     private javax.swing.JList bienes_Listar;
     private javax.swing.JList bienes_Mover;
     private javax.swing.JComboBox categoriaCmBox;
     private javax.swing.JTextField codigoTxt;
     private javax.swing.JLabel codigo_mover;
     private javax.swing.JTextField costo_actual;
+    private javax.swing.JMenu cuentasJmenu;
     private javax.swing.JLabel descripcion_mover;
     private javax.swing.JComboBox destino_moverCmBox;
     private javax.swing.JTextArea detalle_mover;
@@ -2310,8 +2316,6 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

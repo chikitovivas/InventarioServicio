@@ -9,12 +9,12 @@
     </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenu1">
+        <Menu class="javax.swing.JMenu" name="bienesJmenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Bienes"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bienesJmenuActionPerformed"/>
           </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="familiaMenuItem">
@@ -74,7 +74,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
+        <Menu class="javax.swing.JMenu" name="cuentasJmenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cuentas"/>
           </Properties>
