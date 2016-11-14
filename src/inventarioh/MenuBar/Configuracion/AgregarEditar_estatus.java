@@ -29,10 +29,11 @@ public class AgregarEditar_estatus extends javax.swing.JFrame {
     ResultSet rs = null;
     //Variable conexion a la DB
     Connection con = null;
+    Callable refrescar = null;
     /**
      * Creates new form AgregarEditar_status
      */
-    public AgregarEditar_estatus(Connection con) throws SQLException {
+    public AgregarEditar_estatus(Connection con, Callable refrescar) throws SQLException {
         initComponents();
         //Conexion a la DB
         this.con = con;
@@ -44,7 +45,7 @@ public class AgregarEditar_estatus extends javax.swing.JFrame {
         Status ca = new Status(con);
         //Se obtienen todas las descripciones de las categorias
         rs = ca.getAll_ubicacion();
-             
+        this.refrescar = refrescar;     
         // Anadimos cada una de las categorias al combobox Categoria
         while(rs.next()){
             this.Estatus.add(rs.getString("descripcion"));
@@ -213,7 +214,7 @@ public class AgregarEditar_estatus extends javax.swing.JFrame {
         //Abrimos un nuevo Jframe para agregar categoria
         Agregar_estatus pantalla;
         try {
-            pantalla = new Agregar_estatus(this.select_estatus,this.Estatus,this.con,prueba);
+            pantalla = new Agregar_estatus(this.select_estatus,this.Estatus,this.con,prueba,this.refrescar);
             pantalla.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(AgregarEditar_estatus.class.getName()).log(Level.SEVERE, null, ex);
@@ -247,6 +248,7 @@ public class AgregarEditar_estatus extends javax.swing.JFrame {
             this.Estatus.removeAll();
             //Y se agregan las nuevas categorias al comboBox pero actualizado
             try {
+                this.refrescar.call();
                 //Nueva Clase Categoria
                 Status ca = new Status(con);
                 //Se obtienen todas las descripciones de las categorias
@@ -257,6 +259,8 @@ public class AgregarEditar_estatus extends javax.swing.JFrame {
                 }
 
             } catch (SQLException ex) {
+                Logger.getLogger(AgregarEditar_estatus.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
                 Logger.getLogger(AgregarEditar_estatus.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
@@ -271,6 +275,7 @@ public class AgregarEditar_estatus extends javax.swing.JFrame {
             this.Estatus.removeAll();
             //Y se agregan las nuevas categorias al comboBox pero actualizado
             try {
+                this.refrescar.call();
                 //Nueva Clase Categoria
                 Status ca = new Status(con);
                 //Se obtienen todas las descripciones de las categorias
@@ -281,6 +286,8 @@ public class AgregarEditar_estatus extends javax.swing.JFrame {
                 }
 
             } catch (SQLException ex) {
+                Logger.getLogger(AgregarEditar_estatus.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
                 Logger.getLogger(AgregarEditar_estatus.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

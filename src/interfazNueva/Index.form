@@ -11,7 +11,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="bienesJmenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Bienes"/>
+            <Property name="text" type="java.lang.String" value="Informaci&#xf3;n b&#xe1;sica"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bienesJmenuActionPerformed"/>
@@ -22,7 +22,7 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+F"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Familia"/>
+                <Property name="text" type="java.lang.String" value="Categor&#xed;a"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="familiaMenuItemActionPerformed"/>
@@ -66,7 +66,7 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+U"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ubicaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Ubicaci&#xf3;n f&#xed;sica"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ubicacionMenuItemActionPerformed"/>
@@ -76,7 +76,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="cuentasJmenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cuentas"/>
+            <Property name="text" type="java.lang.String" value="Cuentas de usuario"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
@@ -140,8 +140,8 @@
             <Container class="javax.swing.JPanel" name="agregarActivoPanel">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Agregar un activo">
-                    <Property name="tabTitle" type="java.lang.String" value="Agregar un activo"/>
+                  <JTabbedPaneConstraints tabName="Manejo de bienes">
+                    <Property name="tabTitle" type="java.lang.String" value="Manejo de bienes"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -212,7 +212,7 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="ProveedorLbl" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="37" max="32767" attributes="0"/>
+                                      <EmptySpace pref="62" max="32767" attributes="0"/>
                                       <Component id="proveedorCmBox" min="-2" pref="267" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="766" max="-2" attributes="0"/>
                                   </Group>
@@ -359,7 +359,7 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel6">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="(*)Ubicacion:"/>
+                        <Property name="text" type="java.lang.String" value="(*)Ubicaci&#xf3;n f&#xed;sica:"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -412,7 +412,7 @@
                                   <Component id="UsuariosPanel" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" pref="993" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" pref="966" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -562,7 +562,7 @@
                       <SubComponents>
                         <Component class="javax.swing.JLabel" name="StatusUbiLbl">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Ubicaci&#xf3;n:"/>
+                            <Property name="text" type="java.lang.String" value="Segun su ubicaci&#xf3;n:"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="StatusFisicoLbl">
@@ -1689,10 +1689,13 @@
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                    <TitledBorder title="Detalle de la movilizaci&#xf3;n"/>
+                                    <TitledBorder title="Detalle del cambio"/>
                                   </Border>
                                 </Property>
                               </Properties>
+                              <AccessibilityProperties>
+                                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Detalle del cambio"/>
+                              </AccessibilityProperties>
 
                               <Layout>
                                 <DimensionLayout dim="0">
@@ -1816,12 +1819,12 @@
                               <SubComponents>
                                 <Component class="javax.swing.JLabel" name="jLabel14">
                                   <Properties>
-                                    <Property name="text" type="java.lang.String" value="Ubicaci&#xf3;n"/>
+                                    <Property name="text" type="java.lang.String" value="Nueva ubicaci&#xf3;n"/>
                                   </Properties>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel15">
                                   <Properties>
-                                    <Property name="text" type="java.lang.String" value="F&#xed;sico"/>
+                                    <Property name="text" type="java.lang.String" value="Nuevo f&#xed;sico"/>
                                   </Properties>
                                 </Component>
                                 <Component class="javax.swing.JComboBox" name="ubicacion_mover">

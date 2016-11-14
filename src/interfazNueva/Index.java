@@ -27,6 +27,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -288,7 +289,7 @@ public class Index extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("(*)Ubicacion:");
+        jLabel6.setText("(*)Ubicación física:");
 
         javax.swing.GroupLayout BienPanelLayout = new javax.swing.GroupLayout(BienPanel);
         BienPanel.setLayout(BienPanelLayout);
@@ -299,7 +300,7 @@ public class Index extends javax.swing.JFrame {
                 .addGroup(BienPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(BienPanelLayout.createSequentialGroup()
                         .addComponent(ProveedorLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                         .addComponent(proveedorCmBox, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(766, 766, 766))
                     .addGroup(BienPanelLayout.createSequentialGroup()
@@ -389,7 +390,7 @@ public class Index extends javax.swing.JFrame {
 
         EstadosPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Estados"));
 
-        StatusUbiLbl.setText("Ubicación:");
+        StatusUbiLbl.setText("Segun su ubicación:");
 
         StatusFisicoLbl.setText("Físico:");
 
@@ -498,7 +499,7 @@ public class Index extends javax.swing.JFrame {
                     .addComponent(EstadosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(UsuariosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 993, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -576,7 +577,7 @@ public class Index extends javax.swing.JFrame {
                 .addContainerGap(142, Short.MAX_VALUE))
         );
 
-        PanelBienes.addTab("Agregar un activo", agregarActivoPanel);
+        PanelBienes.addTab("Manejo de bienes", agregarActivoPanel);
 
         bienes_Listar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1062,7 +1063,7 @@ public class Index extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cambios"));
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle de la movilización"));
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle del cambio"));
 
         jLabel17.setText("Detalle");
 
@@ -1105,9 +1106,9 @@ public class Index extends javax.swing.JFrame {
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Cambio de estatus"));
 
-        jLabel14.setText("Ubicación");
+        jLabel14.setText("Nueva ubicación");
 
-        jLabel15.setText("Físico");
+        jLabel15.setText("Nuevo físico");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -1156,6 +1157,8 @@ public class Index extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel9.getAccessibleContext().setAccessibleName("Detalle del cambio");
 
         guardar_mover.setText("Guardar");
         guardar_mover.addActionListener(new java.awt.event.ActionListener() {
@@ -1253,7 +1256,7 @@ public class Index extends javax.swing.JFrame {
 
         getContentPane().add(PanelPrincipal, java.awt.BorderLayout.CENTER);
 
-        bienesJmenu.setText("Bienes");
+        bienesJmenu.setText("Información básica");
         bienesJmenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bienesJmenuActionPerformed(evt);
@@ -1261,7 +1264,7 @@ public class Index extends javax.swing.JFrame {
         });
 
         familiaMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
-        familiaMenuItem.setText("Familia");
+        familiaMenuItem.setText("Categoría");
         familiaMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 familiaMenuItemActionPerformed(evt);
@@ -1297,7 +1300,7 @@ public class Index extends javax.swing.JFrame {
         bienesJmenu.add(proveedoresMenuItem);
 
         ubicacionMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
-        ubicacionMenuItem.setText("Ubicación");
+        ubicacionMenuItem.setText("Ubicación física");
         ubicacionMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ubicacionMenuItemActionPerformed(evt);
@@ -1307,7 +1310,7 @@ public class Index extends javax.swing.JFrame {
 
         jMenuBar1.add(bienesJmenu);
 
-        cuentasJmenu.setText("Cuentas");
+        cuentasJmenu.setText("Cuentas de usuario");
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText("Modficiar usuario");
@@ -1451,8 +1454,15 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirBtn1ActionPerformed
 
     private void familiaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_familiaMenuItemActionPerformed
+        Callable<Void> refrescar = new Callable<Void>() {
+            //Funcion call(), la que se ejecutara desde la variable
+            public Void call() {
+                iniciar_agregarActivo();
+                return null;
+            }
+        };
         try {
-            AgregarEditar_familia familia = new AgregarEditar_familia(con);
+            AgregarEditar_familia familia = new AgregarEditar_familia(con,refrescar);
             familia.setVisible(true);
             familia.setLocationRelativeTo(null);
             familia.setResizable(false);
@@ -1518,8 +1528,16 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_editarBtnActionPerformed
 
     private void propietarioMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propietarioMenuItemActionPerformed
+        
+        Callable<Void> refrescar = new Callable<Void>() {
+            //Funcion call(), la que se ejecutara desde la variable
+            public Void call() {
+                iniciar_agregarActivo();
+                return null;
+            }
+        };
         try {
-            AgregarPropietario propietario = new AgregarPropietario(con);
+            AgregarPropietario propietario = new AgregarPropietario(con,refrescar);
             propietario.setVisible(true);
             propietario.setLocationRelativeTo(null);
             propietario.setResizable(false);
@@ -1530,8 +1548,15 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_propietarioMenuItemActionPerformed
 
     private void estatusMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estatusMenuItemActionPerformed
+        Callable<Void> refrescar = new Callable<Void>() {
+            //Funcion call(), la que se ejecutara desde la variable
+            public Void call() {
+                iniciar_agregarActivo();
+                return null;
+            }
+        };        
         try {
-            AgregarEditar_estatus estatus = new AgregarEditar_estatus(con);
+            AgregarEditar_estatus estatus = new AgregarEditar_estatus(con,refrescar);
             estatus.setVisible(true);
             estatus.setLocationRelativeTo(null);
             estatus.setResizable(false);
@@ -1541,8 +1566,16 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_estatusMenuItemActionPerformed
 
     private void proveedoresMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proveedoresMenuItemActionPerformed
+        Callable<Void> refrescar = new Callable<Void>() {
+            //Funcion call(), la que se ejecutara desde la variable
+            public Void call() {
+                iniciar_agregarActivo();
+                return null;
+            }
+        };      
+        
         try {
-            AgregarEditar_proveedor proveedor = new AgregarEditar_proveedor(con);
+            AgregarEditar_proveedor proveedor = new AgregarEditar_proveedor(con,refrescar);
             proveedor.setVisible(true);
             proveedor.setLocationRelativeTo(null);
             proveedor.setResizable(false);
@@ -1552,8 +1585,15 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_proveedoresMenuItemActionPerformed
 
     private void ubicacionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ubicacionMenuItemActionPerformed
+        Callable<Void> refrescar = new Callable<Void>() {
+            //Funcion call(), la que se ejecutara desde la variable
+            public Void call() {
+                iniciar_agregarActivo();
+                return null;
+            }
+        };         
         try {
-            AgregarEditar_ubicacion ubicacion = new AgregarEditar_ubicacion (con);
+            AgregarEditar_ubicacion ubicacion = new AgregarEditar_ubicacion (con,refrescar);
             ubicacion.setVisible(true);
             ubicacion.setLocationRelativeTo(null);
             ubicacion.setResizable(false);

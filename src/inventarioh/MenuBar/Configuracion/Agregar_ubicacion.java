@@ -31,13 +31,13 @@ public class Agregar_ubicacion extends javax.swing.JFrame {
     Connection con = null;
     //Nuevo Callable
     Callable funciones;
-    
+    Callable refrescar;
     int id;
     
     /**
      * Creates new form Ubicacion
      */
-    public Agregar_ubicacion(java.awt.List ubicacion, Connection con, Callable hola ) throws SQLException {
+    public Agregar_ubicacion(java.awt.List ubicacion, Connection con, Callable hola, Callable refrescar ) throws SQLException {
         initComponents();
         this.setTitle("Nueva Ubicacion");
         //Le igualamos el combobox de la lista de Ubicacion
@@ -46,6 +46,7 @@ public class Agregar_ubicacion extends javax.swing.JFrame {
         this.con = con;
         //Igualamos las funciones a nuestra variable
         this.funciones = hola;
+        this.refrescar = refrescar;
         //Combobox Ubicacion
         Ubicacion ub = new Ubicacion(con);
         //Se obtienen todas las descripciones de las ubicacion
@@ -164,6 +165,7 @@ public class Agregar_ubicacion extends javax.swing.JFrame {
                 try {
                     //Llamamos a las funciones de borrar y reanudar
                     this.funciones.call();
+                    this.refrescar.call();
                     //Ventana actual
                     this.descripcion.setText("");
                     //Se obtienen todas las descripciones de las ubicacion

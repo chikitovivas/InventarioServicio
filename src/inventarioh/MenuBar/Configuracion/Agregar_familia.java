@@ -30,19 +30,21 @@ public class Agregar_familia extends javax.swing.JFrame {
     Connection con = null;
     //Nuevo Callable
     Callable funciones;
+    Callable refrescar;
     
     /**
      * Creates new form Agregar_familia
      */
-    public Agregar_familia(java.awt.List familia, Connection con, Callable hola ) {
+    public Agregar_familia(java.awt.List familia, Connection con, Callable hola , Callable refrescar) {
         initComponents();
-        this.setTitle("Nueva Familia");
+        this.setTitle("Nueva Categoria");
         //Le igualamos el combobox de la lista de familias
         this.Familia = familia;
         //Conexion
         this.con = con;
         //Igualamos las funciones a nuestra variable
         this.funciones = hola;
+        this.refrescar = refrescar;
         //Seteamos la Operacion de cierre, a solo esconder este frame
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
     }
@@ -140,6 +142,7 @@ public class Agregar_familia extends javax.swing.JFrame {
                 try {
                     //Llamamos a las funciones de borrar y reanudar
                     this.funciones.call();
+                    this.refrescar.call();
                     //Ventana actual
                     this.descripcion.setText("");
                     this.idFamilia.setText("");

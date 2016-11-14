@@ -31,11 +31,12 @@ public class Agregar_estatus extends javax.swing.JFrame {
     Connection con = null;
     //Nuevo Callable
     Callable funciones;
+    Callable refrescar;
     int id_number;
     /**
      * Creates new form Agregar_estatus
      */
-    public Agregar_estatus(javax.swing.JComboBox select,java.awt.List estatus, Connection con, Callable hola ) throws SQLException {
+    public Agregar_estatus(javax.swing.JComboBox select,java.awt.List estatus, Connection con, Callable hola,Callable refrescar ) throws SQLException {
         initComponents();
 
         this.setTitle("Nuevo  Estatus");
@@ -46,6 +47,7 @@ public class Agregar_estatus extends javax.swing.JFrame {
         this.con = con;
         //Igualamos las funciones a nuestra variable
         this.funciones = hola;
+        this.refrescar = refrescar;
         
                 //Combobox Ubicacion
         Status ub = new Status(con);
@@ -171,6 +173,7 @@ public class Agregar_estatus extends javax.swing.JFrame {
                     try {
                         //Llamamos a las funciones de borrar y reanudar
                         this.funciones.call();
+                        this.refrescar.call();
                         //Ventana actual
                         this.descripcion.setText("");
                         rs = cat.getAllid_ubicacion();
@@ -210,6 +213,7 @@ public class Agregar_estatus extends javax.swing.JFrame {
                     try {
                         //Llamamos a las funciones de borrar y reanudar
                         this.funciones.call();
+                        this.refrescar.call();
                         //Ventana actual
                         this.descripcion.setText("");
                         rs = cat.getAllid_fisico();

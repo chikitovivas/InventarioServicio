@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -29,11 +30,12 @@ public class AgregarPropietario extends javax.swing.JFrame {
     ResultSet rs = null;
     //Variable conexion a la DB
     Connection con = null;
+    Callable refrescar = null;
     
     /**
      * Creates new form AgregarPropietario
      */
-    public AgregarPropietario(Connection con) throws SQLException {
+    public AgregarPropietario(Connection con, Callable refrescar) throws SQLException {
         initComponents();
         //Conexion a la DB
         this.con = con;
@@ -44,7 +46,7 @@ public class AgregarPropietario extends javax.swing.JFrame {
         Propietario ca = new Propietario(con);
         //Se obtienen todas las descripciones de las Propietarios
         rs = ca.getAll();
-             
+        this.refrescar = refrescar;     
         // Anadimos cada una de las categorias al combobox Propietarios
         while(rs.next()){
             this.Propietarios.add(rs.getString("Razon_Social"));
@@ -153,7 +155,7 @@ public class AgregarPropietario extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Razon Social:");
+        jLabel3.setText("Razón Social/Nombre:");
 
         razon.setEnabled(false);
 
@@ -299,9 +301,14 @@ public class AgregarPropietario extends javax.swing.JFrame {
         Propietario cat = new Propietario(con);
         //Si ya existe el RIF/Cedula
         if(cat.exist(Integer.parseInt(this.RIF_cedula.getText()))){
-             //Si se actualoza la Propietario Exitosamente
+             //Si se actualiza la Propietario Exitosamente
              if(cat.actualizar(this.razon.getText().toString(),Integer.parseInt(this.RIF_cedula.getText()),this.contacto.getText().toString(),
                      this.email.getText().toString(),this.tlf1.getText().toString(),this.tlf2.getText().toString())){
+                try {
+                    this.refrescar.call();
+                } catch (Exception ex) {
+                    Logger.getLogger(AgregarPropietario.class.getName()).log(Level.SEVERE, null, ex);
+                }
                  JOptionPane.showMessageDialog(null, "Propietario actualizado Exitosamente");
              }else{
                  JOptionPane.showMessageDialog(null, "No se actualizo el propietario.","Error al actualizar"
@@ -311,6 +318,11 @@ public class AgregarPropietario extends javax.swing.JFrame {
             //Si se Guarda la Propietario Exitosamente
             if(cat.agregar(this.razon.getText().toString(),Integer.parseInt(this.RIF_cedula.getText()),this.contacto.getText().toString(),
                      this.email.getText().toString(),this.tlf1.getText().toString(),this.tlf2.getText().toString())){
+                try {
+                    this.refrescar.call();
+                } catch (Exception ex) {
+                    Logger.getLogger(AgregarPropietario.class.getName()).log(Level.SEVERE, null, ex);
+                }
                  JOptionPane.showMessageDialog(null, "Propietario agregado Exitosamente");
             }else{
                  JOptionPane.showMessageDialog(null, "No se agrego el propietario.","Error al agregar"
@@ -321,6 +333,7 @@ public class AgregarPropietario extends javax.swing.JFrame {
         this.Propietarios.removeAll();
         //Y se agregan las nuevas categorias al comboBox pero actualizado
         try {
+            this.refrescar.call();
             //Nueva Clase Categoria
             Propietario ca = new Propietario(con);
             //Se obtienen todas las descripciones de las Propietario
@@ -349,6 +362,8 @@ public class AgregarPropietario extends javax.swing.JFrame {
             usuarios.setModel( model );
             
         } catch (SQLException ex) {
+            Logger.getLogger(AgregarPropietario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(AgregarPropietario.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Se borran los campos decripcion y id de categorias

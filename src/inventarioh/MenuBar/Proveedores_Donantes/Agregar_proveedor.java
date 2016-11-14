@@ -31,13 +31,14 @@ public class Agregar_proveedor extends javax.swing.JFrame {
     Connection con = null;
     //Nuevo Callable
     Callable funciones;
+    Callable refrescar;
     
     int id;
     
     /**
      * Creates new form Proveedor
      */
-    public Agregar_proveedor(java.awt.List proveedor, Connection con, Callable hola ) throws SQLException {
+    public Agregar_proveedor(java.awt.List proveedor, Connection con, Callable hola, Callable refrescar) throws SQLException {
         initComponents();
         this.setTitle("Nueva Proveedor");
         //Le igualamos el combobox de la lista de Proveedor
@@ -46,6 +47,7 @@ public class Agregar_proveedor extends javax.swing.JFrame {
         this.con = con;
         //Igualamos las funciones a nuestra variable
         this.funciones = hola;
+        this.refrescar = refrescar;
         //Combobox Proveedor
         Proveedor pro = new Proveedor(con);
         //Se obtienen todas las descripciones de las Proveedor
@@ -127,7 +129,7 @@ public class Agregar_proveedor extends javax.swing.JFrame {
 
         jLabel3.setText("Direccion:");
 
-        jLabel4.setText("(*)RIF-Cedula:");
+        jLabel4.setText("(*)Razón Social/Nombre:");
 
         jLabel7.setText("Telefono 2:");
 
@@ -149,16 +151,11 @@ public class Agregar_proveedor extends javax.swing.JFrame {
                             .addComponent(agregar)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jLabel1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel3))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(18, 18, 18)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(rif, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -166,7 +163,9 @@ public class Agregar_proveedor extends javax.swing.JFrame {
                                         .addComponent(idProveedor)
                                         .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(tlf1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tlf2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(tlf2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(contacto, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(35, 35, 35))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,11 +174,6 @@ public class Agregar_proveedor extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(96, 96, 96)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(contacto, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel10)
                             .addComponent(jLabel9))
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -219,12 +213,12 @@ public class Agregar_proveedor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(agregar)
                 .addGap(30, 30, 30))
         );
 
-        setSize(new java.awt.Dimension(356, 412));
+        setSize(new java.awt.Dimension(375, 412));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -255,6 +249,7 @@ public class Agregar_proveedor extends javax.swing.JFrame {
                 try {
                     //Llamamos a las funciones de borrar y reanudar
                     this.funciones.call();
+                    this.refrescar.call();
                     //Ventana actual
                     this.razon_social.setText("");
                     this.rif.setText("");

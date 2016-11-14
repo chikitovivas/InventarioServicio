@@ -31,11 +31,12 @@ public class AgregarEditar_proveedor extends javax.swing.JFrame {
     //Variable conexion a la DB
     Connection con = null;
     Callable hola = null;
+    Callable refrescar = null;
     
     /**
      * Creates new form AgregarEditar_proveedor
      */
-    public AgregarEditar_proveedor(Connection con) throws SQLException {
+    public AgregarEditar_proveedor(Connection con, Callable refrescar) throws SQLException {
         initComponents();
         //Conexion a la DB
         this.con = con;
@@ -48,7 +49,7 @@ public class AgregarEditar_proveedor extends javax.swing.JFrame {
         Proveedor ca = new Proveedor(con);
         //Se obtienen todas las descripciones de las categorias
         rs = ca.getAll();
-             
+        this.refrescar = refrescar;     
         // Anadimos cada una de las categorias al combobox Categoria
         while(rs.next()){
             this.Proveedores.add(rs.getString("razon_social"));
@@ -155,7 +156,7 @@ public class AgregarEditar_proveedor extends javax.swing.JFrame {
 
         jLabel3.setText("Direccion:");
 
-        jLabel4.setText("(*)Razon Social:");
+        jLabel4.setText("(*)Razón Social/Nombre:");
 
         jLabel5.setText("Telefono 2:");
 
@@ -190,7 +191,7 @@ public class AgregarEditar_proveedor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, Short.MAX_VALUE)
                         .addComponent(agregar_proveedor))
                     .addComponent(Proveedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -348,7 +349,7 @@ public class AgregarEditar_proveedor extends javax.swing.JFrame {
         //Abrimos un nuevo Jframe para agregar categoria
         Agregar_proveedor pantalla;
         try {
-            pantalla = new Agregar_proveedor(this.Proveedores,this.con,prueba);
+            pantalla = new Agregar_proveedor(this.Proveedores,this.con,prueba,this.refrescar);
             pantalla.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(AgregarEditar_proveedor.class.getName()).log(Level.SEVERE, null, ex);
@@ -392,6 +393,7 @@ public class AgregarEditar_proveedor extends javax.swing.JFrame {
             this.Proveedores.removeAll();
             //Y se agregan las nuevas categorias al comboBox pero actualizado
             try {
+                this.refrescar.call();
                 //Nueva Clase Categoria
                 Proveedor ca = new Proveedor(con);
                 //Se obtienen todas las descripciones de las Proveedor
@@ -402,6 +404,8 @@ public class AgregarEditar_proveedor extends javax.swing.JFrame {
                 }
 
             } catch (SQLException ex) {
+                Logger.getLogger(AgregarEditar_proveedor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
                 Logger.getLogger(AgregarEditar_proveedor.class.getName()).log(Level.SEVERE, null, ex);
             }
             //Se borran los campos descripcion y id de Proveedor

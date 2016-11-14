@@ -29,10 +29,11 @@ public class AgregarEditar_ubicacion extends javax.swing.JFrame {
     //Variable conexion a la DB
     Connection con = null;
     Callable hola = null;
+    Callable refrescar = null;
     /**
      * Creates new form AgregarEditar_ubicacion
      */
-    public AgregarEditar_ubicacion(Connection con) throws SQLException{
+    public AgregarEditar_ubicacion(Connection con, Callable refrescar) throws SQLException{
         initComponents();
         //Conexion a la DB
         this.con = con;
@@ -43,7 +44,7 @@ public class AgregarEditar_ubicacion extends javax.swing.JFrame {
         Ubicacion ub = new Ubicacion(con);
         //Se obtienen todas las descripciones de las ubicacion
         rs = ub.getAll();
-             
+        this.refrescar = refrescar;      
         // Anadimos cada una de las Ubicacion al list ubicacion
         while(rs.next()){
             this.Ubicaciones.add(rs.getString("descripcion"));
@@ -92,7 +93,7 @@ public class AgregarEditar_ubicacion extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Ubicaciones:");
+        jLabel6.setText("Ubicaciones físicas:");
 
         guardar.setText("Guardar");
         guardar.addActionListener(new java.awt.event.ActionListener() {
@@ -138,7 +139,7 @@ public class AgregarEditar_ubicacion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                         .addComponent(agregar))
                     .addComponent(Ubicaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -230,6 +231,7 @@ public class AgregarEditar_ubicacion extends javax.swing.JFrame {
         this.Ubicaciones.removeAll();
         //Y se agregan las nuevas Ubicacion al comboBox pero actualizado
         try {
+            this.refrescar.call();
             //Nueva Clase ubicacion
             Ubicacion ca = new Ubicacion(con);
             //Se obtienen todas las descripciones de las ubicacion
@@ -240,6 +242,8 @@ public class AgregarEditar_ubicacion extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
+            Logger.getLogger(AgregarEditar_ubicacion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(AgregarEditar_ubicacion.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Se borran los campos descripcion y id de Ubicacion
@@ -285,7 +289,7 @@ public class AgregarEditar_ubicacion extends javax.swing.JFrame {
         //Abrimos un nuevo Jframe para agregar Ubicacion
         Agregar_ubicacion pantalla;
         try {
-            pantalla = new Agregar_ubicacion(this.Ubicaciones,this.con,prueba);
+            pantalla = new Agregar_ubicacion(this.Ubicaciones,this.con,prueba,this.refrescar);
             pantalla.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(AgregarEditar_ubicacion.class.getName()).log(Level.SEVERE, null, ex);

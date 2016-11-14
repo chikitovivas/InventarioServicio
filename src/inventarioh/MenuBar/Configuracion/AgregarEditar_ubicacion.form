@@ -30,7 +30,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="156" max="32767" attributes="0"/>
+                      <EmptySpace pref="124" max="32767" attributes="0"/>
                       <Component id="agregar" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="Ubicaciones" max="32767" attributes="0"/>
@@ -109,7 +109,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ubicaciones:"/>
+        <Property name="text" type="java.lang.String" value="Ubicaciones f&#xed;sicas:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="guardar">

@@ -212,7 +212,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Razon Social:"/>
+        <Property name="text" type="java.lang.String" value="Raz&#xf3;n Social/Nombre:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="razon">
